@@ -1,6 +1,6 @@
 ﻿using CryptoApp.ApplicationCore.ViewModels;
+using CryptoApp.Domain.Services;
 using CryptoApp.Presentation.Extensions;
-using CryptoApp.Presentation.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -13,12 +13,14 @@ namespace CryptoApp.Presentation
         public App()
         {
             var sc = new ServiceCollection();
-
+            var mainWindow = new MainWindow();
             sc.AddConfiguration()
-              .AddMapper()
-              .AddApiClients()
-              .AddViewModels()
-              .AddViews();
+               .AddApiClients()
+               .AddViewModels()
+               .AddViews()
+               .AddSingleton(mainWindow)
+               .AddNavigation(mainWindow.MainFrame)
+               .BuildServiceProvider(); 
 
             services = sc.BuildServiceProvider();
         }
@@ -27,15 +29,14 @@ namespace CryptoApp.Presentation
         {
             base.OnStartup(e);
 
-            var mainWindow = new MainWindow();
-
-            var mainPage = services.GetRequiredService<MainPage>();
-            mainPage.DataContext = services.GetRequiredService<MainPageViewModel>();
-
-            mainWindow.MainFrame.Navigate(mainPage);
-
+            var mainWindow = services.GetRequiredService<MainWindow>();
             MainWindow = mainWindow;
+
+            var navigation = services.GetRequiredService<INavigationManager>();
+            navigation.NavigateTo<MainPageViewModel>();
+
             MainWindow.Show();
         }
+
     }
 }

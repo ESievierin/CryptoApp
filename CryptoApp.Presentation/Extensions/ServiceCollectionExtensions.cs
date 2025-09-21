@@ -1,11 +1,11 @@
 ﻿using CryptoApp.ApplicationCore.ViewModels;
 using CryptoApp.Domain.Services;
-using CryptoApp.Infrastructure.Mappers;
 using CryptoApp.Infrastructure.Services;
 using CryptoApp.Presentation.Pages;
 using CryptoApp.Presentation.Services.Navigation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace CryptoApp.Presentation.Extensions
 {
@@ -22,16 +22,6 @@ namespace CryptoApp.Presentation.Extensions
 
             return services;
         }
-        public static IServiceCollection AddMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.AddProfile<CryptoAppMapper>();
-            }, typeof(CryptoAppMapper).Assembly);
-
-            return services;
-        }
-
         public static IServiceCollection AddApiClients(this IServiceCollection services)
         {
             services.AddHttpClient<IMarketDataProvider, CoinGeckoApiClient>((sp, client) =>
@@ -51,29 +41,30 @@ namespace CryptoApp.Presentation.Extensions
         public static IServiceCollection AddViewModels(this IServiceCollection services)
         {
             services.AddTransient<MainPageViewModel>();
+            services.AddTransient<CoinDetailViewModel>();
             return services;
         }
 
         public static IServiceCollection AddViews(this IServiceCollection services)
         {
             services.AddTransient<MainPage>();
+            services.AddTransient<CoinDetailPage>();
             services.AddTransient<MainWindow>();
             return services;
         }
 
-        public static IServiceCollection AddNavigation(this IServiceCollection services)
+        public static IServiceCollection AddNavigation(this IServiceCollection services, Frame frame)
         {
-            services.AddSingleton<INavigationService>(sp =>
+            services.AddSingleton<INavigationManager>(sp =>
             {
-                var mainWindow = sp.GetRequiredService<MainWindow>();
-                var nav = new FrameNavigationService(sp, mainWindow.MainFrame);
-
+                var nav = new FrameNavigationService(sp, frame);
                 nav.Register<MainPageViewModel, MainPage>();
+                nav.Register<CoinDetailViewModel, CoinDetailPage>();
                 return nav;
             });
 
             return services;
-
         }
+
     }
 }

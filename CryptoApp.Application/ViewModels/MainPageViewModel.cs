@@ -5,7 +5,7 @@ using CryptoApp.Domain.Services;
 
 namespace CryptoApp.ApplicationCore.ViewModels
 {
-    public partial class MainPageViewModel(IMarketDataProvider marketDataProvider) : ObservableObject
+    public partial class MainPageViewModel(IMarketDataProvider marketDataProvider, INavigationManager navigationManager) : ObservableObject
     {
         [ObservableProperty]
         private bool isLoading;
@@ -31,5 +31,11 @@ namespace CryptoApp.ApplicationCore.ViewModels
                 IsLoading = false;
             }
         }
+        [RelayCommand]
+        private void OpenCoin(string coinId)
+        {
+            navigationManager.NavigateTo<CoinDetailViewModel>(coinId);
+        }
+
     }
 }

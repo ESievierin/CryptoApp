@@ -14,7 +14,7 @@ namespace CryptoApp.Infrastructure.DTO
         public string Name { get; set; } = null!;
 
         [JsonPropertyName("image")]
-        public string? Image { get; set; }
+        public string Image { get; set; } = null!;
 
         [JsonPropertyName("current_price")]
         public decimal CurrentPrice { get; set; }
@@ -23,9 +23,9 @@ namespace CryptoApp.Infrastructure.DTO
         public decimal MarketCap { get; set; }
 
         [JsonPropertyName("fully_diluted_valuation")]
-        public decimal? FullyDilutedValuation { get; set; }
+        public decimal FullyDilutedValuation { get; set; }
 
         [JsonPropertyName("price_change_percentage_24h")]
-        public double PriceChangePercentage24h { get; set; }
+        public decimal PriceChangePercentage24h { get; set; }
     }
 }
