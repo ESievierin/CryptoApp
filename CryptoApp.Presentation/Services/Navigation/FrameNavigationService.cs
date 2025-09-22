@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CryptoApp.Domain.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
 
 namespace CryptoApp.Presentation.Services.Navigation
 {
-    public class FrameNavigationService(IServiceProvider serviceProvider, Frame frame) : INavigationService
+    public class FrameNavigationService(IServiceProvider serviceProvider, Frame frame) : INavigationManager
     {
         private readonly Dictionary<Type, Type> map = new();
 
@@ -14,7 +15,7 @@ namespace CryptoApp.Presentation.Services.Navigation
             map[typeof(TViewModel)] = typeof(TView);
         }
 
-        public void NavigateTo<TViewModel>(object parameter = null) where TViewModel : class
+        public void NavigateTo<TViewModel>(object? parameter = null) where TViewModel : class
         {
             if (map.TryGetValue(typeof(TViewModel), out var viewType))
             {

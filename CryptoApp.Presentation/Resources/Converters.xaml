@@ -6,4 +6,5 @@
     <conv:ChangeToSymbolConverter x:Key="ChangeToSymbolConverter"/>
     <conv:MarketCapConverter x:Key="MarketCapConverter"/>
     <conv:ToUpperConverter x:Key="UpperCaseConverter"/>
+    <conv:TargetCurrencyConverter x:Key="TargetCurrencyConverter"/>
 </ResourceDictionary>

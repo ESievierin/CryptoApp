@@ -28,7 +28,7 @@
                 <Setter Property="Background" Value="#222222"/>
                 <Setter Property="RenderTransform">
                     <Setter.Value>
-                        <ScaleTransform ScaleX="1.01" ScaleY="1.01"/>
+                        <ScaleTransform ScaleX="1.005" ScaleY="1.005"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -36,7 +36,7 @@
     </Style>
 
     <DataTemplate x:Key="CoinCardTemplate">
-        <Border Style="{StaticResource CardStyle}" MinHeight="120">
+        <Border Style="{StaticResource CardStyle}" MinHeight="140">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -46,34 +46,48 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Width="60" Height="60" CornerRadius="30" Background="#2A2A2A"
-                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Image Source="{Binding Image}" Stretch="Uniform" Margin="8"/>
                 </Border>
-                
+
                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"/>
                     <TextBlock Text="{Binding Symbol, Converter={StaticResource UpperCaseConverter}}"
-                               FontSize="14" Foreground="Gray"/>
+                           FontSize="14" Foreground="Gray"/>
                 </StackPanel>
-
+                
                 <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="15,0,0,0">
                     <TextBlock Text="{Binding MarketCap, Converter={StaticResource MarketCapConverter}, StringFormat=Mcap: {0}}"
-                               FontSize="16" FontWeight="SemiBold"/>
+                           FontSize="16" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding FullyDilutedValuation, Converter={StaticResource MarketCapConverter}, StringFormat=FDV: {0}}"
-                               FontSize="14" Foreground="Gray"/>
+                           FontSize="14" Foreground="Gray"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,20,0">
-                    <TextBlock Text="{Binding CurrentPrice, StringFormat={}{0:C}}"
+                <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,20,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding CurrentPrice, StringFormat={}{0:C}}"
                                FontSize="18" FontWeight="Bold" Margin="0,0,10,0"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}%}"
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}%}"
                                    Foreground="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToBrushConverter}}"
                                    FontSize="18" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToSymbolConverter}}"
-                                    Foreground="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToBrushConverter}}"
-                                    FontWeight="Bold" FontSize="18"/>
+                            <TextBlock Text="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToSymbolConverter}}"
+                                   Foreground="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToBrushConverter}}"
+                                   FontWeight="Bold" FontSize="18"/>
+                        </StackPanel>
                     </StackPanel>
+
+                    <Button Content="Details"
+                        Command="{Binding DataContext.OpenCoinCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                        CommandParameter="{Binding Id}"
+                        Width="100"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Right"
+                        Background="#00E676"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"/>
                 </StackPanel>
             </Grid>
         </Border>

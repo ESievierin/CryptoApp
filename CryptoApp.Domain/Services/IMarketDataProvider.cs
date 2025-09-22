@@ -5,5 +5,6 @@ namespace CryptoApp.Domain.Services
     public interface IMarketDataProvider
     {
         Task<List<CryptoCoin>> GetTopCoinsAsync(int count, string currency = "usd");
+        Task<CoinDetail> GetCoinDetailAsync(string id, string currency = "usd");
     }
 }
