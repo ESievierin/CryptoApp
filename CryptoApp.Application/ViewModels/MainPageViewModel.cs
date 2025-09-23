@@ -5,7 +5,10 @@ using CryptoApp.Domain.Services;
 
 namespace CryptoApp.ApplicationCore.ViewModels
 {
-    public partial class MainPageViewModel(IMarketDataProvider marketDataProvider, INavigationManager navigationManager) : ObservableObject
+    public partial class MainPageViewModel(
+        IMarketDataProvider marketDataProvider,
+        INavigationManager navigationManager
+    ) : ObservableObject
     {
         [ObservableProperty]
         private bool isLoading;
@@ -13,8 +16,16 @@ namespace CryptoApp.ApplicationCore.ViewModels
         private const int CoinCount = 10;
 
         [ObservableProperty]
-        private List<CryptoCoin> coins = new();
+        private CryptoCoin[] coins = Array.Empty<CryptoCoin>();
 
+        [ObservableProperty]
+        private string searchQuery = string.Empty;
+
+        [ObservableProperty]
+        private SearchCoin[] searchResults = Array.Empty<SearchCoin>();
+
+        [ObservableProperty]
+        private bool isSearchResultsVisible;
 
         [RelayCommand]
         public async Task LoadCoinsAsync()
@@ -31,11 +42,29 @@ namespace CryptoApp.ApplicationCore.ViewModels
                 IsLoading = false;
             }
         }
+
         [RelayCommand]
         private void OpenCoin(string coinId)
         {
+            if (string.IsNullOrWhiteSpace(coinId))
+                return;
+
             navigationManager.NavigateTo<CoinDetailViewModel>(coinId);
         }
 
+        [RelayCommand]
+        private async Task SearchCoinsAsync()
+        {
+            if (string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                SearchResults = Array.Empty<SearchCoin>();
+                IsSearchResultsVisible = false;
+                return;
+            }
+
+            var results = await marketDataProvider.SearchCoinsAsync(SearchQuery);
+            SearchResults = results;
+            IsSearchResultsVisible = results.Length > 0;
+        }
     }
 }

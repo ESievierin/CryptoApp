@@ -1,6 +1,5 @@
 ﻿using CryptoApp.Domain.Models;
 using CryptoApp.Infrastructure.DTO;
-using System.Runtime.CompilerServices;
 
 namespace CryptoApp.Infrastructure.Extensions.Maping
 {
@@ -21,9 +20,9 @@ namespace CryptoApp.Infrastructure.Extensions.Maping
             };
         }
 
-        public static List<CryptoCoin> ToDomain(this IEnumerable<CoinGeckoCoinDto>? coins)
+        public static CryptoCoin[] ToDomain(this IEnumerable<CoinGeckoCoinDto>? coins)
         {
-            return coins?.Select(c => c.ToDomain()).ToList() ?? new List<CryptoCoin>();
+            return coins?.Select(c => c.ToDomain()).ToArray() ?? Array.Empty<CryptoCoin>();
         }
     }
 }

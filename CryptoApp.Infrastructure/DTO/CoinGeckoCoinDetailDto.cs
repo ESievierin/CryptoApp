@@ -20,7 +20,7 @@ namespace CryptoApp.Infrastructure.DTO
         public MarketDataDto MarketData { get; set; } = null!;
 
         [JsonPropertyName("tickers")]
-        public List<TickerDto> Tickers { get; set; } = new();
+        public TickerDto[] Tickers { get; set; } = Array.Empty<TickerDto>();
     }
 
     public sealed class ImageInfoDto

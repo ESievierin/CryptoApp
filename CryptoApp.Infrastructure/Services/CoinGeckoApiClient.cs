@@ -9,7 +9,7 @@ namespace CryptoApp.Infrastructure.Services
 {
     public sealed class CoinGeckoApiClient(HttpClient httpClient) : IMarketDataProvider
     {
-        public async Task<List<CryptoCoin>> GetTopCoinsAsync(int count, string currency = "usd")
+        public async Task<CryptoCoin[]> GetTopCoinsAsync(int count, string currency = "usd")
         {
             var url = $"coins/markets?vs_currency=usd&order=market_cap_desc&per_page={count}&page=1&sparkline=false&price_change_percentage=24h";
 
@@ -18,11 +18,12 @@ namespace CryptoApp.Infrastructure.Services
 
             var json = await resp.Content.ReadAsStringAsync();
 
-            var coins = JsonSerializer.Deserialize<List<CoinGeckoCoinDto>>(json,
+            var coins = JsonSerializer.Deserialize<CoinGeckoCoinDto[]>(json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return coins.ToDomain();
         }
+
         public async Task<CoinDetail> GetCoinDetailAsync(string id, string currency = "usd")
         {
             var url = $"coins/{id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false";
@@ -40,5 +41,21 @@ namespace CryptoApp.Infrastructure.Services
            
             return coinDetail.ToDomain(currency);
         }
+
+        public async Task<SearchCoin[]> SearchCoinsAsync(string query)
+        {
+            var url = $"search?query={query}";
+            using var resp = await httpClient.GetAsync(url);
+            resp.EnsureSuccessStatusCode();
+
+            var json = await resp.Content.ReadAsStringAsync();
+            var searchResult = JsonSerializer.Deserialize<CoinGeckoSearchDto>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (searchResult is null)
+                throw new InvalidOperationException($"Failed to search for {query}");
+
+            return searchResult.Coins.ToDomain();
+        } 
     }
 }

@@ -14,6 +14,6 @@
         public decimal Min24h { get; set; }
         public decimal Max24h { get; set; }
 
-        public IReadOnlyList<CoinMarket> Markets { get; set; } = [];
+        public CoinMarket[] Markets { get; set; } = [];
     }
 }
