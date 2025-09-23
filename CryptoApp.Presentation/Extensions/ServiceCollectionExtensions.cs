@@ -28,9 +28,9 @@ namespace CryptoApp.Presentation.Extensions
             {
                 var config = sp.GetRequiredService<IConfiguration>();
                 var apiKey = config["CoinGecko:ApiKey"];
-                var BaseUrl = "https://api.coingecko.com/api/v3/";
+                var baseUrl = "https://api.coingecko.com/api/v3/";
 
-                client.BaseAddress = new Uri(BaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 if (!string.IsNullOrWhiteSpace(apiKey))
                     client.DefaultRequestHeaders.Add("x-cg-demo-api-key", apiKey);
             });

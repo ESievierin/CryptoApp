@@ -36,7 +36,7 @@ namespace CryptoApp.ApplicationCore.ViewModels
 
                 detail.Markets = detail.Markets
                 .Where(m => m.Pair.StartsWith($"{detail.Symbol}/", StringComparison.OrdinalIgnoreCase))
-                .ToList();
+                .ToArray();
 
                 Coin = detail;
             }

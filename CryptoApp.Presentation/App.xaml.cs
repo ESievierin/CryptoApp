@@ -19,8 +19,7 @@ namespace CryptoApp.Presentation
                .AddViewModels()
                .AddViews()
                .AddSingleton(mainWindow)
-               .AddNavigation(mainWindow.MainFrame)
-               .BuildServiceProvider(); 
+               .AddNavigation(mainWindow.MainFrame); 
 
             services = sc.BuildServiceProvider();
         }

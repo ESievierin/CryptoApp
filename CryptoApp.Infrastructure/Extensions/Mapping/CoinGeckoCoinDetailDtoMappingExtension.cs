@@ -30,7 +30,7 @@ namespace CryptoApp.Infrastructure.Extensions.Mapping
                     Pair = $"{t.Base}/{t.Target}",
                     Price = t.Last,
                     TradeUrl = t.TradeUrl
-                }).ToList()
+                }).ToArray()
             };
         }
     }

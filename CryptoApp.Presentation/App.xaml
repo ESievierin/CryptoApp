@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Resources/Converters.xaml"/>
                 <ResourceDictionary Source="Resources/CardTemplates.xaml"/>
                 <ResourceDictionary Source="Resources/CoinDetailsStyles.xaml"/>
+                <ResourceDictionary Source="/Resources/SearchCoinCardTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

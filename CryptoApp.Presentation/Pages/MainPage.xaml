@@ -12,10 +12,67 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Coins}" 
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <DockPanel Margin="0,0,0,10">
+                <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                         Width="250"
+                         Height="25"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Background="#1E1E1E"
+                         Foreground="White"
+                         BorderBrush="#2A2A2A"
+                         BorderThickness="1"
+                         FontSize="14"
+                         KeyDown="SearchTextBox_KeyDown"/>
+
+                <Button Content="Search"
+                        Command="{Binding SearchCoinsCommand}"
+                        HorizontalAlignment="Left"
+                        Margin="10,0,0,0"
+                        Width="100"
+                        Background="#00E676"
+                        Foreground="Black"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"/>
+            </DockPanel>
+
+            <Border Background="#121212"
+                    BorderBrush="#2A2A2A"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    MaxHeight="200"
+                    Margin="0,0,0,15">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSearchResultsVisible}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding SearchResults}"
+                                  ItemTemplate="{StaticResource SearchCoinCardTemplate}">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <EventSetter Event="MouseLeftButtonUp"
+                                             Handler="SearchResult_Click"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+
+            <ItemsControl ItemsSource="{Binding Coins}"
                           ItemTemplate="{StaticResource CoinCardTemplate}"/>
-        </ScrollViewer>
-    </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
