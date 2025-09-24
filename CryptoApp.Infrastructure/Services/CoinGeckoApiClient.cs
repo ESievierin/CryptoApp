@@ -56,6 +56,30 @@ namespace CryptoApp.Infrastructure.Services
                 throw new InvalidOperationException($"Failed to search for {query}");
 
             return searchResult.Coins.ToDomain();
-        } 
+        }
+
+        public async Task<PricePoint[]> GetPriceSeriesAsync(string id, string currency = "usd", int days = 7)
+        {
+            var url = $"coins/{id}/market_chart?vs_currency={currency}&days={days}";
+            using var resp = await httpClient.GetAsync(url);
+            resp.EnsureSuccessStatusCode();
+
+            var json = await resp.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(json);
+            var prices = doc.RootElement.GetProperty("prices");
+            
+            var points = prices.EnumerateArray()
+                .Select(p => new PricePoint
+                {
+                    TimeOADate = DateTimeOffset
+                        .FromUnixTimeMilliseconds((long)p[0].GetDouble())
+                        .UtcDateTime
+                        .ToOADate(),
+                    Price = p[1].GetDouble()
+                })
+                .ToArray();
+
+            return points;
+        }
     }
 }
