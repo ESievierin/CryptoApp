@@ -7,5 +7,6 @@ namespace CryptoApp.Domain.Services
         Task<CryptoCoin[]> GetTopCoinsAsync(int count, string currency = "usd");
         Task<CoinDetail> GetCoinDetailAsync(string id, string currency = "usd");
         Task<SearchCoin[]> SearchCoinsAsync(string query);
+        Task<PricePoint[]> GetPriceSeriesAsync(string id, string currency = "usd", int days = 7);
     }
 }
