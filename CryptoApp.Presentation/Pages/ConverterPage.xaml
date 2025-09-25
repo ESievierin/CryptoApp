@@ -5,7 +5,6 @@
       Foreground="White">
 
     <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <Style x:Key="FlatListButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -99,7 +98,7 @@
         </ScrollViewer>
         
         <Border Background="#AA000000"
-                Visibility="{Binding IsSearchVisible, Converter={StaticResource BoolToVis}}">
+                Visibility="{Binding IsSearchVisible, Converter={StaticResource ArrayLenghtToVisibilityConverter}}">
             <Border HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="520"

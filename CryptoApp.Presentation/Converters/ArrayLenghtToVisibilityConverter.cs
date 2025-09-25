@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace CryptoApp.Presentation.Converters
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    public class ArrayLenghtToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
