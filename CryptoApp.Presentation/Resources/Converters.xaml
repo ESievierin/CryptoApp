@@ -7,4 +7,5 @@
     <conv:MarketCapConverter x:Key="MarketCapConverter"/>
     <conv:ToUpperConverter x:Key="UpperCaseConverter"/>
     <conv:TargetCurrencyConverter x:Key="TargetCurrencyConverter"/>
+    <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 </ResourceDictionary>
