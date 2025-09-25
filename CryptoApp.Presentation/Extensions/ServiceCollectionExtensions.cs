@@ -42,12 +42,14 @@ namespace CryptoApp.Presentation.Extensions
         {
             services.AddTransient<MainPageViewModel>();
             services.AddTransient<CoinDetailViewModel>();
+            services.AddTransient<ConverterViewModel>();
             return services;
         }
 
         public static IServiceCollection AddViews(this IServiceCollection services)
         {
             services.AddTransient<MainPage>();
+            services.AddTransient<ConverterPage>();
             services.AddTransient<CoinDetailPage>();
             services.AddTransient<MainWindow>();
             return services;
@@ -60,6 +62,7 @@ namespace CryptoApp.Presentation.Extensions
                 var nav = new FrameNavigationService(sp, frame);
                 nav.Register<MainPageViewModel, MainPage>();
                 nav.Register<CoinDetailViewModel, CoinDetailPage>();
+                nav.Register<ConverterViewModel, ConverterPage>();
                 return nav;
             });
 

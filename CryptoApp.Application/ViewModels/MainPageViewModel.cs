@@ -66,5 +66,11 @@ namespace CryptoApp.ApplicationCore.ViewModels
             SearchResults = results;
             IsSearchResultsVisible = results.Length > 0;
         }
+
+        [RelayCommand]
+        private void OpenConverter()
+        {
+            navigationManager.NavigateTo<ConverterViewModel>();
+        }
     }
 }
