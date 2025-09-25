@@ -7,10 +7,11 @@ namespace CryptoApp.ApplicationCore.ViewModels
 {
     public partial class MainPageViewModel(
         IMarketDataProvider marketDataProvider,
-        INavigationManager navigationManager
+        INavigationManager navigationManager,
+        AppState appState
     ) : ObservableObject
     {
-        [ObservableProperty]
+        [ObservableProperty] 
         private bool isLoading;
 
         private const int CoinCount = 10;
@@ -18,14 +19,30 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [ObservableProperty]
         private CryptoCoin[] coins = Array.Empty<CryptoCoin>();
 
-        [ObservableProperty]
+        [ObservableProperty] 
         private string searchQuery = string.Empty;
 
-        [ObservableProperty]
+        [ObservableProperty] 
         private SearchCoin[] searchResults = Array.Empty<SearchCoin>();
 
-        [ObservableProperty]
+        [ObservableProperty] 
         private bool isSearchResultsVisible;
+
+        public Currency SelectedCurrency
+        {
+            get => appState.SelectedCurrency;
+            set
+            {
+                if (appState.SelectedCurrency != value)
+                {
+                    appState.SelectedCurrency = value;
+                    OnPropertyChanged();
+                    _ = LoadCoinsAsync();
+                }
+            }
+        }
+
+        public static IReadOnlyList<Currency> AvailableCurrencies => CurrencyCatalog.All;
 
         [RelayCommand]
         public async Task LoadCoinsAsync()
@@ -35,7 +52,10 @@ namespace CryptoApp.ApplicationCore.ViewModels
             try
             {
                 IsLoading = true;
-                Coins = await marketDataProvider.GetTopCoinsAsync(CoinCount);
+                Coins = await marketDataProvider.GetTopCoinsAsync(
+                    CoinCount,
+                    appState.SelectedCurrency.Code
+                );
             }
             finally
             {
@@ -46,10 +66,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [RelayCommand]
         private void OpenCoin(string coinId)
         {
-            if (string.IsNullOrWhiteSpace(coinId))
-                return;
-
-            navigationManager.NavigateTo<CoinDetailViewModel>(coinId);
+            if (!string.IsNullOrWhiteSpace(coinId))
+                navigationManager.NavigateTo<CoinDetailViewModel>(coinId);
         }
 
         [RelayCommand]

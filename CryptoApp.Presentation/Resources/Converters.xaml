@@ -4,7 +4,8 @@
 
     <conv:ChangeToBrushConverter x:Key="ChangeToBrushConverter"/>
     <conv:ChangeToSymbolConverter x:Key="ChangeToSymbolConverter"/>
-    <conv:MarketCapConverter x:Key="MarketCapConverter"/>
+    <conv:CompactNumberConverter x:Key="CompactNumberConverter"/>
     <conv:ToUpperConverter x:Key="UpperCaseConverter"/>
     <conv:TargetCurrencyConverter x:Key="TargetCurrencyConverter"/>
+    <conv:PriceWithCurrencyConverter x:Key="PriceWithCurrencyConverter"/>
 </ResourceDictionary>

@@ -11,7 +11,7 @@ namespace CryptoApp.Infrastructure.Services
     {
         public async Task<CryptoCoin[]> GetTopCoinsAsync(int count, string currency = "usd")
         {
-            var url = $"coins/markets?vs_currency=usd&order=market_cap_desc&per_page={count}&page=1&sparkline=false&price_change_percentage=24h";
+            var url = $"coins/markets?vs_currency={currency}&order=market_cap_desc&per_page={count}&page=1&sparkline=false&price_change_percentage=24h";
 
             using var resp = await httpClient.GetAsync(url);
             resp.EnsureSuccessStatusCode();

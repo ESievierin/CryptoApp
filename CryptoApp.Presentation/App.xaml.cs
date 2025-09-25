@@ -15,6 +15,7 @@ namespace CryptoApp.Presentation
             var sc = new ServiceCollection();
             var mainWindow = new MainWindow();
             sc.AddConfiguration()
+               .AddAppState()
                .AddApiClients()
                .AddViewModels()
                .AddViews()

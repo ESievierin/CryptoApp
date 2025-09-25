@@ -3,7 +3,7 @@ using System.Windows.Data;
 
 namespace CryptoApp.Presentation.Converters
 {
-    public sealed class MarketCapConverter : IValueConverter
+    public sealed class CompactNumberConverter : IValueConverter
     {
         private static readonly IReadOnlyList<(decimal Threshold, string Suffix)> FormatRules = new List<(decimal, string)>
         {
