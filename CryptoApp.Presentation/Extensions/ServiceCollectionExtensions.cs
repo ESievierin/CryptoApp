@@ -1,4 +1,5 @@
 ﻿using CryptoApp.ApplicationCore.ViewModels;
+using CryptoApp.Domain.Models;
 using CryptoApp.Domain.Services;
 using CryptoApp.Infrastructure.Services;
 using CryptoApp.Presentation.Pages;
@@ -20,6 +21,11 @@ namespace CryptoApp.Presentation.Extensions
 
             services.AddSingleton<IConfiguration>(config);
 
+            return services;
+        }
+        public static IServiceCollection AddAppState(this IServiceCollection services) 
+        {
+            services.AddSingleton<AppState>();
             return services;
         }
         public static IServiceCollection AddApiClients(this IServiceCollection services)

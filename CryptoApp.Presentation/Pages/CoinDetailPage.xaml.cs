@@ -48,7 +48,7 @@ namespace CryptoApp.Presentation.Pages
 
             plt.Title($"{vm.Coin?.Name} price history", bold: true, size: 20, color: System.Drawing.Color.White);
             plt.XLabel("Time");
-            plt.YLabel("Price (USD)");
+            plt.YLabel($"Price ({vm.SelectedCurrency.Code.ToUpper()})");
             plt.XAxis.DateTimeFormat(true);
 
             plt.Style(

@@ -2,9 +2,14 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:converters="clr-namespace:CryptoApp.Presentation.Converters"
       Title="CryptoApp"
       Background="#121212"
       Foreground="White">
+
+    <Page.Resources>
+        <converters:PriceWithCurrencyConverter x:Key="PriceWithCurrencyConverter"/>
+    </Page.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -19,8 +24,6 @@
                 <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                          Width="250"
                          Height="25"
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Left"
                          Background="#1E1E1E"
                          Foreground="White"
                          BorderBrush="#2A2A2A"
@@ -30,20 +33,34 @@
 
                 <Button Content="Search"
                         Command="{Binding SearchCoinsCommand}"
-                        HorizontalAlignment="Left"
-                        Margin="10,0,0,0"
                         Width="100"
+                        Margin="10,0,0,0"
                         Background="#00E676"
                         Foreground="Black"
                         FontWeight="Bold"
                         BorderThickness="0"
                         Cursor="Hand"/>
 
+                <ComboBox ItemsSource="{Binding AvailableCurrencies}"
+                  SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
+                  Width="100"
+                  Margin="20,0,0,0"
+                  Background="#1E1E1E"
+                  Foreground="Black"
+                  BorderBrush="#2A2A2A">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Code, Converter={StaticResource UpperCaseConverter}}"
+                       Foreground="Black"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
                 <Button Content="Converter"
                         Command="{Binding OpenConverterCommand}"
+                        Width="120"
                         HorizontalAlignment="Right"
                         Margin="20,0,0,0"
-                        Width="120"
                         Background="#8A00C4"
                         Foreground="White"
                         FontWeight="Bold"

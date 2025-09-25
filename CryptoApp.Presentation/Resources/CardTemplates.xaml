@@ -55,18 +55,26 @@
                     <TextBlock Text="{Binding Symbol, Converter={StaticResource UpperCaseConverter}}"
                            FontSize="14" Foreground="Gray"/>
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="15,0,0,0">
-                    <TextBlock Text="{Binding MarketCap, Converter={StaticResource MarketCapConverter}, StringFormat=Mcap: {0}}"
-                           FontSize="16" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding FullyDilutedValuation, Converter={StaticResource MarketCapConverter}, StringFormat=FDV: {0}}"
-                           FontSize="14" Foreground="Gray"/>
+                    <TextBlock FontSize="16" FontWeight="SemiBold"
+                           Text="{Binding MarketCap, Converter={StaticResource CompactNumberConverter}, StringFormat=MCap: {0}}"/>
+
+                    <TextBlock FontSize="14" Foreground="Gray"
+                           Text="{Binding FullyDilutedValuation, Converter={StaticResource CompactNumberConverter}, StringFormat=FDV: {0}}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Vertical" Margin="0,0,20,0">
+                <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Orientation="Vertical" Margin="0,0,20,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding CurrentPrice, StringFormat={}{0:C}}"
-                               FontSize="18" FontWeight="Bold" Margin="0,0,10,0"/>
+                        <TextBlock FontSize="18" FontWeight="Bold" Margin="0,0,10,0">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource PriceWithCurrencyConverter}">
+                                    <Binding Path="CurrentPrice"/>
+                                    <Binding Path="DataContext.SelectedCurrency" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="{Binding PriceChangePercentage24h, StringFormat={}{0:F2}%}"
                                    Foreground="{Binding PriceChangePercentage24h, Converter={StaticResource ChangeToBrushConverter}}"

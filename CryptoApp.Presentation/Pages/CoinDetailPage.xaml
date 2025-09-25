@@ -36,25 +36,45 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,40,0">
-                        <TextBlock Text="{Binding Coin.CurrentPrice, StringFormat={}{0:C}}"
-                                   FontSize="36" FontWeight="Bold"/>
+                        <TextBlock FontSize="36" FontWeight="Bold">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource PriceWithCurrencyConverter}">
+                                    <Binding Path="Coin.CurrentPrice"/>
+                                    <Binding Path="DataContext.SelectedCurrency" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         <TextBlock Text="{Binding Coin.PriceChangePercentage24h, StringFormat={}{0:F2}%}"
                                    Foreground="{Binding Coin.PriceChangePercentage24h, Converter={StaticResource ChangeToBrushConverter}}"
                                    FontSize="22" FontWeight="SemiBold"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="3" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Coin.MarketCap, Converter={StaticResource MarketCapConverter}, StringFormat=Market Cap: {0}}" FontSize="20"/>
-                        <TextBlock Text="{Binding Coin.FullyDilutedValuation, Converter={StaticResource MarketCapConverter}, StringFormat=FDV: {0}}" FontSize="20"/>
+                        <TextBlock Text="{Binding Coin.MarketCap, Converter={StaticResource CompactNumberConverter}, StringFormat=Market Cap: {0}}" FontSize="20"/>
+                        <TextBlock Text="{Binding Coin.FullyDilutedValuation, Converter={StaticResource CompactNumberConverter}, StringFormat=FDV: {0}}" FontSize="20"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="4" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Coin.TotalVolume, Converter={StaticResource MarketCapConverter}, StringFormat=Volume: {0}}" FontSize="20"/>
+                        <TextBlock Text="{Binding Coin.TotalVolume, Converter={StaticResource CompactNumberConverter}, StringFormat=Volume: {0}}" FontSize="20"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="5" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Coin.Min24h, StringFormat=24h Low: {0:C}}" FontSize="20"/>
-                        <TextBlock Text="{Binding Coin.Max24h, StringFormat=24h High: {0:C}}" FontSize="20"/>
+                        <TextBlock FontSize="20">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource PriceWithCurrencyConverter}" StringFormat="24h Min: {0}">
+                                    <Binding Path="Coin.Min24h"/>
+                                    <Binding Path="DataContext.SelectedCurrency" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock FontSize="20">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource PriceWithCurrencyConverter}" StringFormat="24h Max: {0}">
+                                    <Binding Path="Coin.Max24h"/>
+                                    <Binding Path="DataContext.SelectedCurrency" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -71,11 +91,12 @@
                                    FontSize="22" FontWeight="Bold"
                                    Foreground="#00E676"
                                    VerticalAlignment="Center"/>
-                        <TextBlock Text="USD"
+                        <TextBlock Text="{Binding DataContext.SelectedCurrency.Code, RelativeSource={RelativeSource AncestorType=Page}}"
                                    Foreground="Gray"
                                    Margin="12,0,0,0"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                         <Button Content="1D"  Command="{Binding ChangeDaysCommand}" CommandParameter="1"  Style="{StaticResource PrimaryButtonStyle}" Margin="5,0"/>
                         <Button Content="7D"  Command="{Binding ChangeDaysCommand}" CommandParameter="7"  Style="{StaticResource PrimaryButtonStyle}" Margin="5,0"/>
@@ -83,12 +104,13 @@
                         <Button Content="90D" Command="{Binding ChangeDaysCommand}" CommandParameter="90" Style="{StaticResource PrimaryButtonStyle}" Margin="5,0"/>
                         <Button Content="365D" Command="{Binding ChangeDaysCommand}" CommandParameter="365" Style="{StaticResource PrimaryButtonStyle}" Margin="5,0"/>
                     </StackPanel>
+
                     <Border Grid.Row="1"
                             Background="#121212"
                             CornerRadius="6">
                         <sp:WpfPlot x:Name="PricePlot"
-                            Height="340"
-                            Margin="0,20,0,20" />   
+                                    Height="340"
+                                    Margin="0,20,0,20" />
                     </Border>
                 </Grid>
             </Border>

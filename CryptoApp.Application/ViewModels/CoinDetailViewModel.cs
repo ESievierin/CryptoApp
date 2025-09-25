@@ -9,7 +9,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
 {
     public partial class CoinDetailViewModel(
         IMarketDataProvider marketDataProvider,
-        INavigationManager navigationManager
+        INavigationManager navigationManager,
+        AppState appState
     ) : ObservableObject, INavigationAware
     {
         [ObservableProperty]
@@ -23,6 +24,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
 
         [ObservableProperty]
         private int selectedDays = 7;
+
+        public Currency SelectedCurrency => appState.SelectedCurrency;
 
         public async Task OnNavigatedTo(object parameter)
         {
@@ -41,7 +44,7 @@ namespace CryptoApp.ApplicationCore.ViewModels
             try
             {
                 IsLoading = true;
-                var detail = await marketDataProvider.GetCoinDetailAsync(id);
+                var detail = await marketDataProvider.GetCoinDetailAsync(id, appState.SelectedCurrency.Code);
 
                 detail.Markets = detail.Markets
                     .Where(m => m.Pair.StartsWith($"{detail.Symbol}/", StringComparison.OrdinalIgnoreCase))
@@ -64,7 +67,7 @@ namespace CryptoApp.ApplicationCore.ViewModels
             try
             {
                 IsLoading = true;
-                PriceSeries = await marketDataProvider.GetPriceSeriesAsync(id, "usd", SelectedDays);
+                PriceSeries = await marketDataProvider.GetPriceSeriesAsync(id, appState.SelectedCurrency.Code, SelectedDays);
             }
             finally
             {
