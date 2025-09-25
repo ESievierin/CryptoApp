@@ -81,5 +81,36 @@ namespace CryptoApp.Infrastructure.Services
 
             return points;
         }
+
+        public async Task<decimal> GetConversionRateAsync(string fromId, string toId, string vsCurrency = "usd")
+        {
+            var ids = $"{fromId},{toId}";
+            var url = $"simple/price?ids={ids}&vs_currencies={vsCurrency}";
+
+            using var resp = await httpClient.GetAsync(url);
+            if (!resp.IsSuccessStatusCode)
+                return 0m;
+
+            var json = await resp.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, decimal>>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (data is null)
+                return 0m;
+
+            decimal GetPrice(string coinId) =>
+                data.TryGetValue(coinId.ToLowerInvariant(), out var map) &&
+                map.TryGetValue(vsCurrency, out var price)
+                    ? price
+                    : 0m;
+
+            var fromPrice = GetPrice(fromId);
+            var toPrice = GetPrice(toId);
+
+            return (fromPrice > 0 && toPrice > 0)
+                ? fromPrice / toPrice
+                : 0m;
+        }
+
     }
 }
