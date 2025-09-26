@@ -8,6 +8,7 @@ namespace CryptoApp.ApplicationCore.ViewModels
     public partial class MainPageViewModel(
         IMarketDataProvider marketDataProvider,
         INavigationManager navigationManager,
+        ILocalizationService localizationService,
         AppState appState
     ) : ObservableObject
     {
@@ -42,7 +43,21 @@ namespace CryptoApp.ApplicationCore.ViewModels
             }
         }
 
+        public Language SelectedLanguage
+        {
+            get => appState.SelectedLanguage;
+            set
+            {
+                if (appState.SelectedLanguage != value)
+                {
+                    appState.SelectedLanguage = value;
+                    localizationService.SetLanguage(SelectedLanguage);
+                    OnPropertyChanged();
+                }
+            }
+        }
         public static IReadOnlyList<Currency> AvailableCurrencies => CurrencyCatalog.All;
+        public static IReadOnlyList<Language> AvailableLanguages => LanguageCatalog.All;
 
         [RelayCommand]
         public async Task LoadCoinsAsync()

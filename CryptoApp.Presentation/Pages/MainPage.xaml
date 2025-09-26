@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:converters="clr-namespace:CryptoApp.Presentation.Converters"
+      xmlns:loc="clr-namespace:CryptoApp.Presentation.Localization"
       Title="CryptoApp"
       Background="#121212"
       Foreground="White">
@@ -31,7 +32,7 @@
                          FontSize="14"
                          KeyDown="SearchTextBox_KeyDown"/>
 
-                <Button Content="Search"
+                <Button Content="{loc:Translate Search}"
                         Command="{Binding SearchCoinsCommand}"
                         Width="100"
                         Margin="10,0,0,0"
@@ -42,21 +43,35 @@
                         Cursor="Hand"/>
 
                 <ComboBox ItemsSource="{Binding AvailableCurrencies}"
-                  SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
-                  Width="100"
-                  Margin="20,0,0,0"
-                  Background="#1E1E1E"
-                  Foreground="Black"
-                  BorderBrush="#2A2A2A">
+                          SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
+                          Width="100"
+                          Margin="20,0,0,0"
+                          Background="#1E1E1E"
+                          Foreground="Black"
+                          BorderBrush="#2A2A2A">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Code, Converter={StaticResource UpperCaseConverter}}"
-                       Foreground="Black"/>
+                                       Foreground="Black"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Button Content="Converter"
+                <ComboBox ItemsSource="{Binding AvailableLanguages}"
+                          SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                          Width="150"
+                          Margin="20,0,0,0"
+                          Background="#1E1E1E"
+                          Foreground="Black"
+                          BorderBrush="#2A2A2A">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}" Foreground="Black"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button Content="{loc:Translate Converter}"
                         Command="{Binding OpenConverterCommand}"
                         Width="120"
                         HorizontalAlignment="Right"

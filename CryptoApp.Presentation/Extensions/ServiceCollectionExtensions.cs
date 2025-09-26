@@ -6,6 +6,7 @@ using CryptoApp.Presentation.Pages;
 using CryptoApp.Presentation.Services.Navigation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Resources;
 using System.Windows.Controls;
 
 namespace CryptoApp.Presentation.Extensions
@@ -23,11 +24,27 @@ namespace CryptoApp.Presentation.Extensions
 
             return services;
         }
+        
+        public static IServiceCollection AddResources(this IServiceCollection services)
+        {
+           services.AddSingleton<ResourceManager>(rm =>
+            new ResourceManager("CryptoApp.Presentation.Resources.Localization.Strings", typeof(ServiceCollectionExtensions).Assembly));
+
+            return services;
+        }
+         
+        public static IServiceCollection AddLocalization(this IServiceCollection services)
+        {
+            services.AddSingleton<ILocalizationService, ResxLocalizationService>();
+            return services;
+        }
+
         public static IServiceCollection AddAppState(this IServiceCollection services) 
         {
             services.AddSingleton<AppState>();
             return services;
         }
+
         public static IServiceCollection AddApiClients(this IServiceCollection services)
         {
             services.AddHttpClient<IMarketDataProvider, CoinGeckoApiClient>((sp, client) =>
