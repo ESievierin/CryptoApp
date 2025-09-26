@@ -11,13 +11,6 @@ namespace CryptoApp.Presentation.Pages
         public ConverterPage()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
-        }
-
-        private async void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is ConverterViewModel vm)
-                await vm.InitializeAsync();
         }
     }
 }

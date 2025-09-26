@@ -19,6 +19,6 @@ namespace CryptoApp.Presentation.Converters
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-            => throw new NotSupportedException();
+            => targetTypes.Select(_ => Binding.DoNothing).ToArray();
     }
 }

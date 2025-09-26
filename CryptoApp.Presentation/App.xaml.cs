@@ -1,6 +1,7 @@
 ﻿using CryptoApp.ApplicationCore.ViewModels;
 using CryptoApp.Domain.Services;
 using CryptoApp.Presentation.Extensions;
+using CryptoApp.Presentation.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -15,6 +16,8 @@ namespace CryptoApp.Presentation
             var sc = new ServiceCollection();
             var mainWindow = new MainWindow();
             sc.AddConfiguration()
+               .AddResources()
+               .AddLocalization()
                .AddAppState()
                .AddApiClients()
                .AddViewModels()
@@ -28,6 +31,9 @@ namespace CryptoApp.Presentation
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            var localization = services.GetRequiredService<ILocalizationService>();
+            LocalizationProvider.Initialize(localization);
 
             var mainWindow = services.GetRequiredService<MainWindow>();
             MainWindow = mainWindow;

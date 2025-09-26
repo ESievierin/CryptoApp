@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Back" xml:space="preserve"><value>Назад</value></data>
+  <data name="Search" xml:space="preserve"><value>Пошук</value></data>
+  <data name="Converter" xml:space="preserve"><value>Конвертер</value></data>
+  <data name="CryptoConverter" xml:space="preserve"><value>Крипто конвертер</value></data>
+  <data name="SelectCoin" xml:space="preserve"><value>Виберіть монету</value></data>
+  <data name="SelectSourceCoin" xml:space="preserve"><value>Виберіть монету-джерело</value></data>
+  <data name="SelectTargetCoin" xml:space="preserve"><value>Виберіть цільову монету</value></data>
+  <data name="PriceHistory" xml:space="preserve"><value>Історія цін</value></data>
+  <data name="Markets" xml:space="preserve"><value>Ринки</value></data>
+  <data name="Details" xml:space="preserve"><value>Деталі</value></data>
+  <data name="Open" xml:space="preserve"><value>Відкрити</value></data>
+  <data name="MarketCap" xml:space="preserve"><value>Ринкова капіталізація</value></data>
+  <data name="MCap" xml:space="preserve"><value>MCap</value></data>
+  <data name="FDV" xml:space="preserve"><value>FDV</value></data>
+  <data name="Volume" xml:space="preserve"><value>Торговий oбсяг</value></data>
+  <data name="Min24h" xml:space="preserve"><value>Мінімум за 24г</value></data>
+  <data name="Max24h" xml:space="preserve"><value>Максимум за 24г</value></data>
+  <data name="Time" xml:space="preserve"><value>Час</value></data>
+  <data name="Price" xml:space="preserve"><value>Ціна</value></data>
+</root>
