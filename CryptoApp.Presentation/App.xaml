@@ -10,10 +10,11 @@
                 <views:MainPage/>
             </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Themes/DarkTheme.xaml"/>
                 <ResourceDictionary Source="Resources/Converters.xaml"/>
-                <ResourceDictionary Source="Resources/CardTemplates.xaml"/>
-                <ResourceDictionary Source="Resources/CoinDetailsStyles.xaml"/>
-                <ResourceDictionary Source="/Resources/SearchCoinCardTemplate.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CardTemplates.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CoinDetailsStyles.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/SearchCoinCardTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

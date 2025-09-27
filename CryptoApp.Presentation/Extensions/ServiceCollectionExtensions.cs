@@ -3,6 +3,7 @@ using CryptoApp.Domain.Models;
 using CryptoApp.Domain.Services;
 using CryptoApp.Infrastructure.Services;
 using CryptoApp.Presentation.Pages;
+using CryptoApp.Presentation.Services;
 using CryptoApp.Presentation.Services.Navigation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,13 @@ namespace CryptoApp.Presentation.Extensions
 
             return services;
         }
-         
+        
+        public static IServiceCollection AddTheme(this IServiceCollection services) 
+        {
+            services.AddSingleton<IThemeService, ThemeService>();
+            return services;
+        }
+
         public static IServiceCollection AddLocalization(this IServiceCollection services)
         {
             services.AddSingleton<ILocalizationService, ResxLocalizationService>();

@@ -3,8 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:sp="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
       xmlns:loc="clr-namespace:CryptoApp.Presentation.Localization"
-      Background="#121212"
-      Foreground="White">
+      Background="{DynamicResource PrimaryBackgroundBrush}"
+      Foreground="{DynamicResource PrimaryTextBrush}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="30">
@@ -33,7 +33,7 @@
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,20,0">
                         <TextBlock Text="{Binding Coin.Name}" FontSize="30" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Coin.Symbol, Converter={StaticResource UpperCaseConverter}}"
-                                   FontSize="18" Foreground="Gray"/>
+                                   FontSize="18" Foreground="{DynamicResource SecondaryTextBrush}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,40,0">
@@ -100,7 +100,7 @@
                                                  Mode="OneWay"/>
                                     </MultiBinding>
                                 </Run.Text>
-                            </Run>          
+                            </Run>
                         </TextBlock>
                     </StackPanel>
                 </Grid>
@@ -116,10 +116,10 @@
                     <DockPanel Grid.Row="0" Margin="6,0,6,10">
                         <TextBlock Text="{loc:Translate PriceHistory}"
                                    FontSize="22" FontWeight="Bold"
-                                   Foreground="#00E676"
+                                   Foreground="{DynamicResource AccentBrush}"
                                    VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding DataContext.SelectedCurrency.Code, RelativeSource={RelativeSource AncestorType=Page}, Mode=OneWay}"
-                                   Foreground="Gray"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
                                    Margin="12,0,0,0"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
@@ -133,7 +133,7 @@
                     </StackPanel>
 
                     <Border Grid.Row="1"
-                            Background="#121212"
+                            Background="{DynamicResource CardBackgroundBrush}"
                             CornerRadius="6">
                         <sp:WpfPlot x:Name="PricePlot"
                                     Height="340"
@@ -146,7 +146,7 @@
                 <StackPanel>
                     <TextBlock Text="{loc:Translate Markets}"
                                FontSize="26" FontWeight="Bold" Margin="0,0,0,20"
-                               Foreground="#00E676"/>
+                               Foreground="{DynamicResource AccentBrush}"/>
 
                     <ItemsControl ItemsSource="{Binding Coin.Markets}">
                         <ItemsControl.ItemsPanel>
@@ -168,17 +168,17 @@
                                                    TextAlignment="Center"/>
                                         <TextBlock Text="{Binding Pair}"
                                                    FontSize="14"
-                                                   Foreground="Gray"
+                                                   Foreground="{DynamicResource SecondaryTextBrush}"
                                                    Margin="0,0,0,10"
                                                    TextAlignment="Center"/>
 
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <TextBlock Text="{Binding Price, StringFormat={}{0:F2}}"
                                                        FontSize="18" FontWeight="SemiBold"
-                                                       Foreground="#00E676"
+                                                       Foreground="{DynamicResource AccentBrush}"
                                                        Margin="0,0,5,0"/>
                                             <TextBlock Text="{Binding Pair, Converter={StaticResource TargetCurrencyConverter}}"
-                                                       FontSize="16" Foreground="Gray"/>
+                                                       FontSize="16" Foreground="{DynamicResource SecondaryTextBrush}"/>
                                         </StackPanel>
 
                                         <Button Content="{loc:Translate Open}"

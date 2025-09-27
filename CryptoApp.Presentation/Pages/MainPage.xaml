@@ -5,8 +5,8 @@
       xmlns:converters="clr-namespace:CryptoApp.Presentation.Converters"
       xmlns:loc="clr-namespace:CryptoApp.Presentation.Localization"
       Title="CryptoApp"
-      Background="#121212"
-      Foreground="White">
+      Background="{DynamicResource PageBackgroundBrush}"
+      Foreground="{DynamicResource PrimaryTextBrush}">
 
     <Page.Resources>
         <converters:PriceWithCurrencyConverter x:Key="PriceWithCurrencyConverter"/>
@@ -25,9 +25,9 @@
                 <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
                          Width="250"
                          Height="25"
-                         Background="#1E1E1E"
-                         Foreground="White"
-                         BorderBrush="#2A2A2A"
+                         Background="{DynamicResource InputBackgroundBrush}"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}"
                          BorderThickness="1"
                          FontSize="14"
                          KeyDown="SearchTextBox_KeyDown"/>
@@ -36,7 +36,7 @@
                         Command="{Binding SearchCoinsCommand}"
                         Width="100"
                         Margin="10,0,0,0"
-                        Background="#00E676"
+                        Background="{DynamicResource AccentBrush}"
                         Foreground="Black"
                         FontWeight="Bold"
                         BorderThickness="0"
@@ -46,13 +46,13 @@
                           SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
                           Width="100"
                           Margin="20,0,0,0"
-                          Background="#1E1E1E"
-                          Foreground="Black"
-                          BorderBrush="#2A2A2A">
+                          Background="{DynamicResource InputBackgroundBrush}"
+                          Foreground="{DynamicResource CheckboxTextBrush}"
+                          BorderBrush="{DynamicResource BorderBrush}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Code, Converter={StaticResource UpperCaseConverter}}"
-                                       Foreground="Black"/>
+                                       Foreground="{DynamicResource CheckboxTextBrush}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -61,12 +61,26 @@
                           SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
                           Width="150"
                           Margin="20,0,0,0"
-                          Background="#1E1E1E"
-                          Foreground="Black"
-                          BorderBrush="#2A2A2A">
+                          Background="{DynamicResource InputBackgroundBrush}"
+                          Foreground="{DynamicResource CheckboxTextBrush}"
+                          BorderBrush="{DynamicResource BorderBrush}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DisplayName}" Foreground="Black"/>
+                            <TextBlock Text="{Binding DisplayName}" Foreground="{DynamicResource CheckboxTextBrush}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ComboBox ItemsSource="{Binding AvailableThemes}"
+                          SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+                          Width="120"
+                          Margin="20,0,0,0"
+                          Background="{DynamicResource InputBackgroundBrush}"
+                          Foreground="{DynamicResource CheckboxTextBrush}"
+                          BorderBrush="{DynamicResource BorderBrush}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{DynamicResource CheckboxTextBrush}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -76,15 +90,15 @@
                         Width="120"
                         HorizontalAlignment="Right"
                         Margin="20,0,0,0"
-                        Background="#8A00C4"
+                        Background="{DynamicResource AccentAltBrush}"
                         Foreground="White"
                         FontWeight="Bold"
                         BorderThickness="0"
                         Cursor="Hand"/>
             </DockPanel>
 
-            <Border Background="#121212"
-                    BorderBrush="#2A2A2A"
+            <Border Background="{DynamicResource PageBackgroundBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
                     CornerRadius="6"
                     MaxHeight="200"

@@ -9,10 +9,11 @@ namespace CryptoApp.ApplicationCore.ViewModels
         IMarketDataProvider marketDataProvider,
         INavigationManager navigationManager,
         ILocalizationService localizationService,
+        IThemeService themeService,
         AppState appState
     ) : ObservableObject
     {
-        [ObservableProperty] 
+        [ObservableProperty]
         private bool isLoading;
 
         private const int CoinCount = 10;
@@ -20,13 +21,13 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [ObservableProperty]
         private CryptoCoin[] coins = Array.Empty<CryptoCoin>();
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private string searchQuery = string.Empty;
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private SearchCoin[] searchResults = Array.Empty<SearchCoin>();
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private bool isSearchResultsVisible;
 
         public Currency SelectedCurrency
@@ -56,8 +57,24 @@ namespace CryptoApp.ApplicationCore.ViewModels
                 }
             }
         }
+
+        public Theme SelectedTheme
+        {
+            get => appState.SelectedTheme;
+            set
+            {
+                if (appState.SelectedTheme != value)
+                {
+                    appState.SelectedTheme = value;
+                    themeService.ApplyTheme(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public static IReadOnlyList<Currency> AvailableCurrencies => CurrencyCatalog.All;
         public static IReadOnlyList<Language> AvailableLanguages => LanguageCatalog.All;
+        public static IReadOnlyList<Theme> AvailableThemes => ThemeCatalog.All;
 
         [RelayCommand]
         public async Task LoadCoinsAsync()
