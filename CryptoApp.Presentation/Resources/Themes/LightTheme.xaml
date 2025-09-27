@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="PrimaryBackground">#FFFFFF</Color>
+    <Color x:Key="PageBackground">#FFFFFF</Color>
+    <Color x:Key="CardBackground">#F5F5F5</Color>
+    <Color x:Key="InputBackground">#EEEEEE</Color>
+    <Color x:Key="HoverBackground">#E6E6E6</Color>
+    <Color x:Key="SecondaryBackground">#EEEEEE</Color>
+    <Color x:Key="OverlayBackground">#66000000</Color>
+
+    <Color x:Key="BorderColor">#CCCCCC</Color>
+
+    <Color x:Key="PrimaryText">#000000</Color>
+    <Color x:Key="SecondaryText">#444444</Color>
+    <Color x:Key="MutedText">#777777</Color>
+    <Color x:Key="GrayText">#777777</Color>
+
+    <Color x:Key="AccentColor">#0066CC</Color>
+    <Color x:Key="AccentAlt">#AA33FF</Color>
+
+    <Color x:Key="ShadowColor">#888888</Color>
+    <Color x:Key="ShadowEffectColor">#55000000</Color>
+
+    <Color x:Key="ChartFigureBackground">#FFFFFF</Color>
+    <Color x:Key="ChartDataBackground">#F5F5F5</Color>
+    <Color x:Key="ChartAxis">#000000</Color>
+    <Color x:Key="ChartGrid">#33000000</Color>
+    <Color x:Key="ChartLine">#0066CC</Color>
+    <Color x:Key="ChartFill">#330066CC</Color>
+
+    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource PrimaryBackground}"/>
+    <SolidColorBrush x:Key="PageBackgroundBrush"    Color="{StaticResource PageBackground}"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush"    Color="{StaticResource CardBackground}"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush"   Color="{StaticResource InputBackground}"/>
+    <SolidColorBrush x:Key="HoverBackgroundBrush"   Color="{StaticResource HoverBackground}"/>
+    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="{StaticResource SecondaryBackground}"/>
+    <SolidColorBrush x:Key="OverlayBackgroundBrush" Color="{StaticResource OverlayBackground}"/>
+
+    <SolidColorBrush x:Key="BorderBrush"            Color="{StaticResource BorderColor}"/>
+
+    <SolidColorBrush x:Key="PrimaryTextBrush"       Color="{StaticResource PrimaryText}"/>
+    <SolidColorBrush x:Key="SecondaryTextBrush"     Color="{StaticResource SecondaryText}"/>
+    <SolidColorBrush x:Key="MutedTextBrush"         Color="{StaticResource MutedText}"/>
+    <SolidColorBrush x:Key="GrayTextBrush"          Color="{StaticResource GrayText}"/>
+
+    <SolidColorBrush x:Key="AccentBrush"            Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentAltBrush"         Color="{StaticResource AccentAlt}"/>
+
+    <SolidColorBrush x:Key="ShadowBrush"            Color="{StaticResource ShadowColor}"/>
+    <SolidColorBrush x:Key="ShadowEffectBrush"      Color="{StaticResource ShadowEffectColor}"/>
+
+    <SolidColorBrush x:Key="ChartFigureBackgroundBrush" Color="{StaticResource ChartFigureBackground}"/>
+    <SolidColorBrush x:Key="ChartDataBackgroundBrush"   Color="{StaticResource ChartDataBackground}"/>
+    <SolidColorBrush x:Key="ChartAxisBrush"             Color="{StaticResource ChartAxis}"/>
+    <SolidColorBrush x:Key="ChartGridBrush"             Color="{StaticResource ChartGrid}"/>
+    <SolidColorBrush x:Key="ChartLineBrush"             Color="{StaticResource ChartLine}"/>
+    <SolidColorBrush x:Key="ChartFillBrush"             Color="{StaticResource ChartFill}"/>
+</ResourceDictionary>

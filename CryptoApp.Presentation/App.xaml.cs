@@ -17,6 +17,7 @@ namespace CryptoApp.Presentation
             var mainWindow = new MainWindow();
             sc.AddConfiguration()
                .AddResources()
+               .AddTheme()
                .AddLocalization()
                .AddAppState()
                .AddApiClients()

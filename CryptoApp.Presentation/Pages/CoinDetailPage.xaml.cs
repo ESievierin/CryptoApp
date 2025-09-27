@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-using CryptoApp.ApplicationCore.ViewModels;
+﻿using CryptoApp.ApplicationCore.ViewModels;
 using ScottPlot;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace CryptoApp.Presentation.Pages
@@ -26,6 +26,17 @@ namespace CryptoApp.Presentation.Pages
             }
         }
 
+        private static System.Drawing.Color GetColor(string brushKey)
+        {
+            if (Application.Current.Resources[brushKey] is SolidColorBrush brush)
+            {
+                var c = brush.Color;
+                return System.Drawing.Color.FromArgb(c.A, c.R, c.G, c.B);
+            }
+
+            return System.Drawing.Color.White;
+        }
+
         private void RenderPlot(CoinDetailViewModel vm)
         {
             if (vm.PriceSeries == null || vm.PriceSeries.Length == 0)
@@ -37,28 +48,38 @@ namespace CryptoApp.Presentation.Pages
             var plt = PricePlot.Plot;
             plt.Clear();
 
+            var lineColor = GetColor("ChartLineBrush");
+            var baseFill = GetColor("ChartFillBrush");
+            var fillColor = System.Drawing.Color.FromArgb(60, baseFill.R, baseFill.G, baseFill.B);
+
+            var figureBg = GetColor("PrimaryBackgroundBrush");
+            var dataBg = GetColor("CardBackgroundBrush");
+            var textColor = GetColor("PrimaryTextBrush");     
+            var gridColor = GetColor("BorderBrush");     
+
             plt.AddScatter(xs, ys,
-                color: System.Drawing.Color.LimeGreen,
+                color: lineColor,
                 lineWidth: 3,
                 markerSize: 0);
 
             plt.AddFill(xs, ys,
                 baseline: ys.Min(),
-                color: System.Drawing.Color.FromArgb(60, 50, 205, 50));
+                color: fillColor);
 
-            plt.Title($"{vm.Coin?.Name} price history", bold: true, size: 20, color: System.Drawing.Color.White);
+            plt.Title($"{vm.Coin?.Name} price history", bold: true, size: 20);
             plt.XLabel("Time");
             plt.YLabel($"Price ({vm.SelectedCurrency.Code.ToUpper()})");
             plt.XAxis.DateTimeFormat(true);
 
             plt.Style(
-                figureBackground: System.Drawing.Color.FromArgb(18, 18, 18),
-                dataBackground: System.Drawing.Color.FromArgb(30, 30, 30),
-                tick: System.Drawing.Color.White,
-                axisLabel: System.Drawing.Color.White
+                figureBackground: figureBg,
+                dataBackground: dataBg,
+                tick: textColor,
+                axisLabel: textColor,
+                titleLabel: textColor
             );
 
-            plt.Grid(color: System.Drawing.Color.FromArgb(80, 255, 255, 255), lineStyle: LineStyle.Dot);
+            plt.Grid(color: gridColor, lineStyle: LineStyle.Dot);
 
             double min = ys.Min();
             double max = ys.Max();
