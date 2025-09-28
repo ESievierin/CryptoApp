@@ -19,7 +19,8 @@ namespace CryptoApp.Infrastructure.Services
             var json = await resp.Content.ReadAsStringAsync();
 
             var coins = JsonSerializer.Deserialize<CoinGeckoCoinDto[]>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                ?? Array.Empty<CoinGeckoCoinDto>();
 
             return coins.ToDomain();
         }
@@ -35,11 +36,8 @@ namespace CryptoApp.Infrastructure.Services
             var coinDetail = JsonSerializer.Deserialize<CoinGeckoCoinDetailDto>(json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (coinDetail is null)
-                throw new InvalidOperationException($"Failed to parse coin detail for {id}");
-
-           
-            return coinDetail.ToDomain(currency);
+            return coinDetail?.ToDomain(currency)
+                   ?? new CoinDetail { Id = id, Symbol = "N/A", Name = "N/A" };
         }
 
         public async Task<SearchCoin[]> SearchCoinsAsync(string query)
@@ -52,10 +50,7 @@ namespace CryptoApp.Infrastructure.Services
             var searchResult = JsonSerializer.Deserialize<CoinGeckoSearchDto>(json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (searchResult is null)
-                throw new InvalidOperationException($"Failed to search for {query}");
-
-            return searchResult.Coins.ToDomain();
+            return searchResult?.Coins.ToDomain() ?? Array.Empty<SearchCoin>();
         }
 
         public async Task<PricePoint[]> GetPriceSeriesAsync(string id, string currency = "usd", int days = 7)
@@ -66,8 +61,10 @@ namespace CryptoApp.Infrastructure.Services
 
             var json = await resp.Content.ReadAsStringAsync();
             using var doc = JsonDocument.Parse(json);
-            var prices = doc.RootElement.GetProperty("prices");
-            
+
+            if (!doc.RootElement.TryGetProperty("prices", out var prices))
+                return Array.Empty<PricePoint>();
+
             var points = prices.EnumerateArray()
                 .Select(p => new PricePoint
                 {
@@ -93,10 +90,8 @@ namespace CryptoApp.Infrastructure.Services
 
             var json = await resp.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, decimal>>>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            if (data is null)
-                return 0m;
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                ?? new Dictionary<string, Dictionary<string, decimal>>();
 
             decimal GetPrice(string coinId) =>
                 data.TryGetValue(coinId.ToLowerInvariant(), out var map) &&
@@ -111,6 +106,5 @@ namespace CryptoApp.Infrastructure.Services
                 ? fromPrice / toPrice
                 : 0m;
         }
-
     }
 }

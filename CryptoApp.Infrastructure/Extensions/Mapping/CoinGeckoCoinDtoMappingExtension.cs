@@ -1,22 +1,23 @@
 ﻿using CryptoApp.Domain.Models;
 using CryptoApp.Infrastructure.DTO;
+using CryptoApp.Infrastructure.Extensions.String;
 
 namespace CryptoApp.Infrastructure.Extensions.Maping
 {
     public static class CoinGeckoCoinDtoMappingExtension
     {
-        public static CryptoCoin ToDomain(this CoinGeckoCoinDto coin) 
+        public static CryptoCoin ToDomain(this CoinGeckoCoinDto coin)
         {
             return new CryptoCoin
             {
-                Id = coin.Id,
-                Symbol = coin.Symbol,
-                Name = coin.Name,
-                CurrentPrice = coin.CurrentPrice,
-                MarketCap = coin.MarketCap,
-                FullyDilutedValuation = coin.FullyDilutedValuation,
-                PriceChangePercentage24h = coin.PriceChangePercentage24h,
-                Image = coin.Image
+                Id = coin.Id.OrNA(),
+                Symbol = coin.Symbol.OrNA(),
+                Name = coin.Name.OrNA(),
+                CurrentPrice = coin.CurrentPrice ?? default,
+                MarketCap = coin.MarketCap ?? default,
+                FullyDilutedValuation = coin.FullyDilutedValuation ?? default,
+                PriceChangePercentage24h = coin.PriceChangePercentage24h ?? default,
+                Image = coin.Image ?? string.Empty
             };
         }
 
