@@ -54,8 +54,8 @@ namespace CryptoApp.Presentation.Pages
 
             var figureBg = GetColor("PrimaryBackgroundBrush");
             var dataBg = GetColor("CardBackgroundBrush");
-            var textColor = GetColor("PrimaryTextBrush");     
-            var gridColor = GetColor("BorderBrush");     
+            var textColor = GetColor("PrimaryTextBrush");
+            var gridColor = GetColor("BorderBrush");
 
             plt.AddScatter(xs, ys,
                 color: lineColor,
@@ -83,6 +83,15 @@ namespace CryptoApp.Presentation.Pages
 
             double min = ys.Min();
             double max = ys.Max();
+
+            const double eps = 1e-9;
+            if (Math.Abs(max - min) < eps)
+            {
+                double offset = Math.Abs(min) < eps ? 1 : Math.Abs(min) * 0.1;
+                min -= offset;
+                max += offset;
+            }
+
             double margin = (max - min) * 0.1;
             plt.SetAxisLimits(yMin: min - margin, yMax: max + margin);
             plt.AxisAutoX();

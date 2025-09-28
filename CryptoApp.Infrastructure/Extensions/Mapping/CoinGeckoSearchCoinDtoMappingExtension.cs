@@ -1,5 +1,6 @@
 ﻿using CryptoApp.Domain.Models;
 using CryptoApp.Infrastructure.DTO;
+using CryptoApp.Infrastructure.Extensions.String;
 
 namespace CryptoApp.Infrastructure.Extensions.Mapping
 {
@@ -9,10 +10,10 @@ namespace CryptoApp.Infrastructure.Extensions.Mapping
         {
             return new SearchCoin
             {
-                Id = coin.Id,
-                Name = coin.Name,
-                Symbol = coin.Symbol,
-                Image = coin.Image
+                Id = coin.Id.OrNA(),
+                Name = coin.Name.OrNA(),
+                Symbol = coin.Symbol.OrNA(),
+                Image = coin.Image ?? string.Empty
             };
         }
 
