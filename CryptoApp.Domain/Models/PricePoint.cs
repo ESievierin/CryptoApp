@@ -2,7 +2,7 @@
 {
     public sealed class PricePoint
     {
-        public double TimeOADate { get; set; }
+        public double TimeOleAutomationDate { get; set; }
         public double Price { get; set; }
     }
 }

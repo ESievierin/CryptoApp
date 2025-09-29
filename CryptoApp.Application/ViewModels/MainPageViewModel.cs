@@ -16,8 +16,6 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [ObservableProperty]
         private bool isLoading;
 
-        private const int CoinCount = 10;
-
         [ObservableProperty]
         private CryptoCoin[] coins = Array.Empty<CryptoCoin>();
 
@@ -29,6 +27,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
 
         [ObservableProperty]
         private bool isSearchResultsVisible;
+
+        private const int CoinCount = 10;
 
         public Currency SelectedCurrency
         {
@@ -79,7 +79,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [RelayCommand]
         public async Task LoadCoinsAsync()
         {
-            if (IsLoading) return;
+            if (IsLoading) 
+                return;
 
             try
             {

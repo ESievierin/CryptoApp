@@ -39,6 +39,8 @@ public partial class ConverterViewModel : ObservableObject
     [ObservableProperty] 
     private bool isSelectingFrom;
 
+    private const int roundPrecision = 11;
+
     private decimal currentRate = 0m;
 
     public ConverterViewModel(
@@ -132,7 +134,7 @@ public partial class ConverterViewModel : ObservableObject
             ToAmount = Round(value * currentRate);
     }
 
-    private static decimal Round(decimal value) => Math.Round(value, 11);
+    private static decimal Round(decimal value) => Math.Round(value, roundPrecision);
 
     [RelayCommand]
     private void GoBack() => navigationManager.NavigateTo<MainPageViewModel>();

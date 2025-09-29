@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CryptoApp.ApplicationCore.Services.Navigation;
 using CryptoApp.Domain.Models;
 using CryptoApp.Domain.Services;
-using CryptoApp.Presentation.Services.Navigation;
 using System.Diagnostics;
 
 namespace CryptoApp.ApplicationCore.ViewModels
@@ -39,18 +39,19 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [RelayCommand]
         private async Task LoadCoinDetailAsync(string id)
         {
-            if (IsLoading) return;
+            if (IsLoading) 
+                return;
 
             try
             {
                 IsLoading = true;
-                var detail = await marketDataProvider.GetCoinDetailAsync(id, appState.SelectedCurrency.Code);
+                var coinDetail = await marketDataProvider.GetCoinDetailAsync(id, appState.SelectedCurrency.Code);
 
-                detail.Markets = detail.Markets
-                    .Where(m => m.Pair.StartsWith($"{detail.Symbol}/", StringComparison.OrdinalIgnoreCase))
+                coinDetail.Markets = coinDetail.Markets
+                    .Where(m => m.Pair.StartsWith($"{coinDetail.Symbol}/", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
 
-                Coin = detail;
+                Coin = coinDetail;
             }
             finally
             {
@@ -91,7 +92,8 @@ namespace CryptoApp.ApplicationCore.ViewModels
         [RelayCommand]
         private async Task ChangeDaysAsync(string stringDays)
         {
-            if (!int.TryParse(stringDays, out var days) || Coin is null) return;
+            if (!int.TryParse(stringDays, out var days) || Coin is null) 
+                return;
 
             SelectedDays = days;
             await LoadPriceSeriesAsync(Coin.Id);

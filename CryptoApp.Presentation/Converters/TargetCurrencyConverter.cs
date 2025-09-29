@@ -10,6 +10,7 @@ namespace CryptoApp.Presentation.Converters
             if (value is string pair && pair.Contains("/"))
             {
                 var parts = pair.Split('/');
+
                 if (parts.Length == 2)
                     return parts[1];
             }
