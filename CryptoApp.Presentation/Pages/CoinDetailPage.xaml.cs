@@ -42,7 +42,7 @@ namespace CryptoApp.Presentation.Pages
             if (vm.PriceSeries == null || vm.PriceSeries.Length == 0)
                 return;
 
-            var xs = vm.PriceSeries.Select(p => p.TimeOADate).ToArray();
+            var xs = vm.PriceSeries.Select(p => p.TimeOleAutomationDate).ToArray();
             var ys = vm.PriceSeries.Select(p => p.Price).ToArray();
 
             var plt = PricePlot.Plot;

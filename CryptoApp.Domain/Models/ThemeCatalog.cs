@@ -8,6 +8,6 @@
 
     public static class ThemeCatalog
     {
-        public static readonly Theme[] All = { Theme.Dark, Theme.Light };
+        public static readonly IReadOnlyList<Theme> All = Enum.GetValues<Theme>();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CryptoApp.Presentation.Services.Navigation
+﻿namespace CryptoApp.ApplicationCore.Services.Navigation
 {
     public interface INavigationAware
     {

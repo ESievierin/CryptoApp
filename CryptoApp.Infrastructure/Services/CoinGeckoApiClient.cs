@@ -9,17 +9,21 @@ namespace CryptoApp.Infrastructure.Services
 {
     public sealed class CoinGeckoApiClient(HttpClient httpClient) : IMarketDataProvider
     {
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         public async Task<CryptoCoin[]> GetTopCoinsAsync(int count, string currency = "usd")
         {
             var url = $"coins/markets?vs_currency={currency}&order=market_cap_desc&per_page={count}&page=1&sparkline=false&price_change_percentage=24h";
 
-            using var resp = await httpClient.GetAsync(url);
-            resp.EnsureSuccessStatusCode();
+            using var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            var json = await resp.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync();
 
-            var coins = JsonSerializer.Deserialize<CoinGeckoCoinDto[]>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            var coins = JsonSerializer.Deserialize<CoinGeckoCoinDto[]>(json, JsonOptions)
                 ?? Array.Empty<CoinGeckoCoinDto>();
 
             return coins.ToDomain();
@@ -29,12 +33,11 @@ namespace CryptoApp.Infrastructure.Services
         {
             var url = $"coins/{id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false";
 
-            using var resp = await httpClient.GetAsync(url);
-            resp.EnsureSuccessStatusCode();
+            using var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            var json = await resp.Content.ReadAsStringAsync();
-            var coinDetail = JsonSerializer.Deserialize<CoinGeckoCoinDetailDto>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var json = await response.Content.ReadAsStringAsync();
+            var coinDetail = JsonSerializer.Deserialize<CoinGeckoCoinDetailDto>(json, JsonOptions);
 
             return coinDetail?.ToDomain(currency)
                    ?? new CoinDetail { Id = id, Symbol = "N/A", Name = "N/A" };
@@ -43,12 +46,11 @@ namespace CryptoApp.Infrastructure.Services
         public async Task<SearchCoin[]> SearchCoinsAsync(string query)
         {
             var url = $"search?query={query}";
-            using var resp = await httpClient.GetAsync(url);
-            resp.EnsureSuccessStatusCode();
+            using var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            var json = await resp.Content.ReadAsStringAsync();
-            var searchResult = JsonSerializer.Deserialize<CoinGeckoSearchDto>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var json = await response.Content.ReadAsStringAsync();
+            var searchResult = JsonSerializer.Deserialize<CoinGeckoSearchDto>(json, JsonOptions);
 
             return searchResult?.Coins.ToDomain() ?? Array.Empty<SearchCoin>();
         }
@@ -56,19 +58,19 @@ namespace CryptoApp.Infrastructure.Services
         public async Task<PricePoint[]> GetPriceSeriesAsync(string id, string currency = "usd", int days = 7)
         {
             var url = $"coins/{id}/market_chart?vs_currency={currency}&days={days}";
-            using var resp = await httpClient.GetAsync(url);
-            resp.EnsureSuccessStatusCode();
+            using var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            var json = await resp.Content.ReadAsStringAsync();
-            using var doc = JsonDocument.Parse(json);
+            var json = await response.Content.ReadAsStringAsync();
+            using var document = JsonDocument.Parse(json);
 
-            if (!doc.RootElement.TryGetProperty("prices", out var prices))
+            if (!document.RootElement.TryGetProperty("prices", out var prices))
                 return Array.Empty<PricePoint>();
 
             var points = prices.EnumerateArray()
                 .Select(p => new PricePoint
                 {
-                    TimeOADate = DateTimeOffset
+                    TimeOleAutomationDate = DateTimeOffset
                         .FromUnixTimeMilliseconds((long)p[0].GetDouble())
                         .UtcDateTime
                         .ToOADate(),
@@ -84,13 +86,12 @@ namespace CryptoApp.Infrastructure.Services
             var ids = $"{fromId},{toId}";
             var url = $"simple/price?ids={ids}&vs_currencies={vsCurrency}";
 
-            using var resp = await httpClient.GetAsync(url);
-            if (!resp.IsSuccessStatusCode)
+            using var response = await httpClient.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
                 return 0m;
 
-            var json = await resp.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, decimal>>>(json,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, decimal>>>(json, JsonOptions)
                 ?? new Dictionary<string, Dictionary<string, decimal>>();
 
             decimal GetPrice(string coinId) =>

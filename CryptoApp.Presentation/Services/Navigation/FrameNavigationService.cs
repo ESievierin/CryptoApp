@@ -1,4 +1,5 @@
-﻿using CryptoApp.Domain.Services;
+﻿using CryptoApp.ApplicationCore.Services.Navigation;
+using CryptoApp.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
 
